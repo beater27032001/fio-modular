@@ -14,7 +14,7 @@ export function App() {
         <Hero />
         <Rack />
       </div>
-      <section className="mt-[70px] border-t border-rail py-16 sm:py-20">
+      <section className="mt-[70px] rack:mt-28 border-t border-rail py-16 sm:py-20">
         <div className="wrap">
           <Features />
           <Buy />

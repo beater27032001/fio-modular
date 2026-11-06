@@ -35,7 +35,7 @@ export function Rack() {
           <motion.canvas
             ref={canvasRef}
             aria-hidden
-            className="pointer-events-none absolute inset-0 z-10 size-full"
+            className="pointer-events-none absolute inset-x-0 top-0 z-10 h-[calc(100%+160px)] w-full"
             variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { delay: 0.5, duration: 0.6 } } }}
           />
           <motion.div

@@ -24,7 +24,7 @@ export function createRope<T>(from: T, a: Point, b: Point, color: string): Rope<
 }
 
 export function stepRope<T>({ pts }: Rope<T>, a: Point, b: Point) {
-  const rest = Math.max(10, Math.hypot(b[0] - a[0], b[1] - a[1]) * 1.12 + 40) / (SEG - 1)
+  const rest = Math.max(10, Math.hypot(b[0] - a[0], b[1] - a[1]) * 1.04 + 30) / (SEG - 1)
   for (let i = 1; i < SEG - 1; i++) {
     const p = pts[i]
     const vx = (p.x - p.px) * DAMPING, vy = (p.y - p.py) * DAMPING

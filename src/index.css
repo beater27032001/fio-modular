@@ -133,7 +133,7 @@
   }
   .jack.out .hole { box-shadow: 0 0 0 3px var(--color-rack); }
   .jack.out span { padding: 1px 5px; border-radius: 2px; background: var(--color-rack); color: #fff; }
-  .jack.mod .hole { background: radial-gradient(circle, #050505 0 38%, #c9a23a 40% 60%, #8c6f1f 62%); }
+  .jack.cv .hole { background: radial-gradient(circle, #050505 0 38%, #c9a23a 40% 60%, #8c6f1f 62%); }
 
   .wave { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
   .wave button, .seq button {

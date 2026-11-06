@@ -85,17 +85,17 @@ export function useCables(options: Options) {
     onPointerCancel: () => (drag.current = null),
   }
 
-  // Canvas acompanha o tamanho do rack e redesenha a cada quadro.
+  // O canvas passa da borda de baixo do rack para os cabos ficarem pendurados; redesenha a cada quadro.
   useEffect(() => {
-    const cv = canvas.current!, el = rack.current!, cx = cv.getContext('2d')!
+    const cv = canvas.current!, cx = cv.getContext('2d')!
     const resize = () => {
       const dpr = Math.min(devicePixelRatio, 2)
-      cv.width = el.clientWidth * dpr
-      cv.height = el.clientHeight * dpr
+      cv.width = cv.clientWidth * dpr
+      cv.height = cv.clientHeight * dpr
       cx.setTransform(dpr, 0, 0, dpr, 0, 0)
     }
     const observer = new ResizeObserver(resize)
-    observer.observe(el)
+    observer.observe(cv)
     let raf = 0
     const frame = () => {
       cx.clearRect(0, 0, cv.width, cv.height)
