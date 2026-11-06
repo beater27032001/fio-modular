@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import { motion } from 'motion/react'
+import { DEFAULT_PATCH } from '@/domain/patch'
 import { useSynth } from '@/hooks/useSynth'
 import { PatchContext, SynthContext, type PatchApi } from '@/providers/rack'
 import { DelayModule, FilterModule, LfoModule, NoiseModule, OscModule, OutModule } from './modules'
@@ -6,7 +8,8 @@ import { DelayModule, FilterModule, LfoModule, NoiseModule, OscModule, OutModule
 const noPatch: PatchApi = { register: () => {}, startDrag: () => {} }
 
 export function Rack() {
-  const synth = useSynth()
+  const [patch] = useState(DEFAULT_PATCH)
+  const synth = useSynth(patch)
 
   return (
     <SynthContext value={synth}>

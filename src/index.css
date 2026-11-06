@@ -151,3 +151,44 @@
   .seq button[aria-pressed="true"] { background: #2b2d33; color: #fff; border-color: #2b2d33; }
   .seq.hats button { height: 16px; }
 }
+
+@layer components {
+  .seq button.now::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -6px;
+    width: 6px;
+    height: 6px;
+    margin-left: -3px;
+    border-radius: 50%;
+    background: var(--color-hot);
+    box-shadow: 0 0 6px var(--color-hot);
+  }
+  .seq button.now { animation: pop .25s var(--ease-out); }
+
+  .power {
+    padding: 12px 10px;
+    border-radius: 4px;
+    background: var(--color-hot);
+    color: #111;
+    font-family: var(--font-display);
+    font-size: 11px;
+    box-shadow: 0 3px 0 #a3321b;
+  }
+  .power[aria-pressed="true"] {
+    background: #2b2d33;
+    color: #ff9b85;
+    box-shadow: inset 0 2px 0 #000;
+    animation: glow 1.2s ease-in-out infinite;
+  }
+
+  .vu { display: flex; align-items: flex-end; justify-content: center; gap: 3px; height: 60px; }
+  .vu i { width: 8px; border-radius: 1px; background: #3a3c42; transition: background .08s; }
+  .vu i.on { background: #6be38f; }
+  .vu i.on.hi { background: #ffd23a; }
+  .vu i.on.pk { background: var(--color-hot); }
+}
+
+@keyframes pop { from { transform: scale(1.12); } }
+@keyframes glow { 50% { box-shadow: inset 0 2px 0 #000, 0 0 0 3px rgb(255 92 57 / .35), 0 0 22px rgb(255 92 57 / .5); } }

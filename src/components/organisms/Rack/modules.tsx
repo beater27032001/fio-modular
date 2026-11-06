@@ -5,6 +5,7 @@ import { Knob } from '@/components/atoms/Knob'
 import { EASE } from '@/constants/motion'
 import { NOTES, PARAMS, WAVEFORMS, formatParam, fromNormal, type ParamId } from '@/domain/synth'
 import { useSynthContext } from '@/providers/rack'
+import { VuMeter } from './VuMeter'
 
 const panelIn: Variants = {
   hidden: { opacity: 0, y: 40 },
@@ -35,7 +36,7 @@ function ParamKnob({ id }: { id: ParamId }) {
 }
 
 export function OscModule() {
-  const { wave, setWave, steps, toggleStep, hats, toggleHat } = useSynthContext()
+  const { wave, setWave, steps, toggleStep, hats, toggleHat, current } = useSynthContext()
   return (
     <Panel title="OSCILADOR" sub="VCO + SEQUENCIADOR" className="col-span-2 sm:col-span-6 rack:flex-[2.6]">
       <div className="wave">
@@ -47,7 +48,7 @@ export function OscModule() {
       </div>
       <div className="seq">
         {NOTES.map((note, i) => (
-          <button key={i} aria-label={`Passo ${i + 1}, nota ${note}`} aria-pressed={steps[i]} onClick={() => toggleStep(i)}>
+          <button key={i} aria-label={`Passo ${i + 1}, nota ${note}`} aria-pressed={steps[i]} className={current === i ? 'now' : undefined} onClick={() => toggleStep(i)}>
             {note}
           </button>
         ))}
@@ -100,8 +101,13 @@ export function DelayModule() {
 }
 
 export function OutModule() {
+  const { playing, togglePower, level } = useSynthContext()
   return (
     <Panel title="SAÍDA" sub="MIXER" className="col-span-2 sm:col-span-3 rack:flex-1">
+      <motion.button className="power" aria-pressed={playing} onClick={togglePower} whileTap={{ y: 2 }}>
+        {playing ? 'DESLIGAR' : 'LIGAR'}
+      </motion.button>
+      <VuMeter level={level} active={playing} />
       <div className="row"><ParamKnob id="vol" /></div>
       <div className="jacks"><Jack id="out1" /><Jack id="out2" /></div>
     </Panel>
