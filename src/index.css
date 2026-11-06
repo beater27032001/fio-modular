@@ -50,3 +50,104 @@
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after { animation: none !important; scroll-behavior: auto !important; }
 }
+
+/* Hardware do rack: gradientes e sombras que não cabem bem em utilitários */
+@layer components {
+  .rack {
+    position: relative;
+    border-radius: 10px;
+    padding: 18px 10px;
+    box-shadow: 0 30px 60px -30px #000;
+    background:
+      linear-gradient(var(--color-rail) 0 10px, transparent 10px calc(100% - 10px), var(--color-rail) calc(100% - 10px)),
+      var(--color-rack);
+  }
+  @variant sm { .rack { padding-inline: 14px; } }
+
+  .mod {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    padding: 12px 12px 14px;
+    border-radius: 3px;
+    color: var(--color-ink);
+    background: linear-gradient(180deg, var(--color-panel), var(--color-panel-2));
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / .7), inset 0 -1px 0 rgb(0 0 0 / .2);
+  }
+  .mod::before, .mod::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #8b8e94;
+    transform: translateX(-50%);
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / .5);
+  }
+  .mod::before { top: 4px; }
+  .mod::after { bottom: 4px; }
+  .mod h3 { margin: 6px 0 0; font-family: var(--font-display); font-weight: 400; font-size: 12px; letter-spacing: .04em; text-align: center; }
+  .mod .sub { margin-top: -10px; font-family: var(--font-mono); font-size: 9px; text-align: center; color: #55585e; letter-spacing: .08em; }
+
+  .row { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+  .row.col { flex-direction: column; align-items: center; }
+  .jacks { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: auto; }
+
+  .knob, .jack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .knob { font-size: 10px; letter-spacing: .06em; text-transform: uppercase; }
+  .knob .cap {
+    position: relative;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    cursor: ns-resize;
+    touch-action: none;
+    background: radial-gradient(circle at 40% 35%, #3b3d43, #141416 70%);
+    box-shadow: 0 3px 6px rgb(0 0 0 / .35), 0 0 0 3px #b9bcc1;
+    transition: box-shadow .2s;
+  }
+  .knob .cap:hover, .knob .cap:active { box-shadow: 0 3px 6px rgb(0 0 0 / .35), 0 0 0 3px var(--color-hot); }
+  .knob .cap i { position: absolute; left: 50%; top: 5px; width: 3px; height: 14px; margin-left: -1.5px; border-radius: 2px; background: #fff; transform-origin: 50% 18px; }
+  .knob .value { font-family: var(--font-mono); font-size: 9.5px; font-weight: 400; color: #55585e; font-variant-numeric: tabular-nums; text-transform: none; }
+
+  .jack { font-size: 9.5px; letter-spacing: .08em; }
+  .jack .hole {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    cursor: crosshair;
+    touch-action: none;
+    background: radial-gradient(circle, #050505 0 38%, #9da0a6 40% 60%, #6d7076 62%);
+    box-shadow: 0 1px 2px rgb(0 0 0 / .4);
+  }
+  .jack.out .hole { box-shadow: 0 0 0 3px var(--color-rack); }
+  .jack.out span { padding: 1px 5px; border-radius: 2px; background: var(--color-rack); color: #fff; }
+  .jack.mod .hole { background: radial-gradient(circle, #050505 0 38%, #c9a23a 40% 60%, #8c6f1f 62%); }
+
+  .wave { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+  .wave button, .seq button {
+    border: 1px solid #9a9da3;
+    border-radius: 3px;
+    background: #e9eaec;
+    color: var(--color-ink);
+    transition: background .15s, color .15s, transform .1s;
+  }
+  .wave button { padding: 4px 0; font-size: 13px; line-height: 1; }
+  .wave button[aria-pressed="true"] { background: var(--color-ink); color: #fff; border-color: var(--color-ink); }
+  .seq { display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; }
+  .seq button { position: relative; height: 34px; padding: 0; font-family: var(--font-mono); font-size: 9px; }
+  .seq button:active { transform: scale(.94); }
+  .seq button[aria-pressed="true"] { background: #2b2d33; color: #fff; border-color: #2b2d33; }
+  .seq.hats button { height: 16px; }
+}
