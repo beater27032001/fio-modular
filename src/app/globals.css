@@ -10,10 +10,11 @@
   --color-fg: #ececef;
   --color-muted: #9a9aa3;
   --color-hot: #ff5c39;
-  --font-display: "Rubik Mono One", "Arial Black", sans-serif;
-  --font-body: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
   --breakpoint-rack: 1100px;
+  /* variáveis do next/font, definidas no <html> pelo layout */
+  --font-display: var(--font-rubik-mono), "Arial Black", sans-serif;
+  --font-body: var(--font-plex-condensed), "Arial Narrow", system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, Menlo, monospace;
 }
 
 @utility wrap {

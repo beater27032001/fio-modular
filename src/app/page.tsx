@@ -1,4 +1,4 @@
-import { MotionConfig } from 'motion/react'
+import { MotionProvider } from '@/providers/MotionProvider'
 import { Buy } from '@/components/organisms/Buy'
 import { Features } from '@/components/organisms/Features'
 import { Footer } from '@/components/organisms/Footer'
@@ -6,9 +6,9 @@ import { Header } from '@/components/organisms/Header'
 import { Hero } from '@/components/organisms/Hero'
 import { Rack } from '@/components/organisms/Rack'
 
-export function App() {
+export default function Home() {
   return (
-    <MotionConfig reducedMotion="user">
+    <MotionProvider>
       <div className="wrap">
         <Header />
         <Hero />
@@ -21,6 +21,6 @@ export function App() {
         </div>
       </section>
       <Footer />
-    </MotionConfig>
+    </MotionProvider>
   )
 }

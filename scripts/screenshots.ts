@@ -1,6 +1,6 @@
 // Gera os prints do README: npm run build && npm run screenshots
+import { spawn } from 'node:child_process'
 import { chromium } from 'playwright'
-import { preview } from 'vite'
 
 const VIEWPORTS = [
   { name: 'desktop', width: 1440, height: 900, full: false },
@@ -8,7 +8,11 @@ const VIEWPORTS = [
   { name: 'mobile-full', width: 390, height: 844, full: true },
 ]
 
-const server = await preview({ preview: { port: 4173, strictPort: true } })
+const server = spawn('node_modules/.bin/next', ['start', '-p', '4173'])
+await new Promise((resolve, reject) => {
+  server.stdout.on('data', d => String(d).includes('Ready') && resolve(null))
+  server.on('exit', code => reject(new Error(`next start saiu com código ${code}`)))
+})
 const browser = await chromium.launch()
 const errors: string[] = []
 
@@ -37,6 +41,6 @@ for (const vp of VIEWPORTS) {
 }
 
 await browser.close()
-server.httpServer.close()
+server.kill()
 if (errors.length) { console.error(errors.join('\n')); process.exit(1) }
 console.log('prints salvos em docs/')

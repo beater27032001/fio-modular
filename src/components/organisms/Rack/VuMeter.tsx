@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useRef } from 'react'
 
 const BARS = Array.from({ length: 8 }, (_, i) => i)

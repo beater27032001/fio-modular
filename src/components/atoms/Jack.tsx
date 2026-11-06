@@ -1,3 +1,5 @@
+'use client'
+
 import { JACKS, type JackId } from '@/domain/patch'
 import { usePatch } from '@/providers/rack'
 

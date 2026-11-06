@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, animate, motion, useInView, useMotionValue, useTransform } from 'motion/react'
 import { EASE } from '@/constants/motion'
