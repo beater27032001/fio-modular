@@ -1,6 +1,7 @@
 import * as Tone from 'tone'
-import { JACKS, type Connection, type JackId } from '@/domain/patch'
-import { NOTES, type ParamValues, type Waveform } from '@/domain/synth'
+
+import { JACKS, type Connection, type JackId } from '@domain/patch'
+import { NOTES, type ParamValues, type Waveform } from '@domain/synth'
 
 export interface SynthState {
   params: ParamValues
@@ -16,9 +17,15 @@ const key = (c: Connection) => `${c.from}>${c.to}`
 
 /** Grafo de áudio do FM-6: recebe o estado do painel e o reflete no Tone. */
 export class AudioEngine {
-  private synth = new Tone.Synth({ oscillator: { type: 'sawtooth' }, envelope: { attack: 0.005, decay: 0.2, sustain: 0.15, release: 0.2 } })
+  private synth = new Tone.Synth({
+    oscillator: { type: 'sawtooth' },
+    envelope: { attack: 0.005, decay: 0.2, sustain: 0.15, release: 0.2 },
+  })
   private oscOut = new Tone.Gain(0.6)
-  private noise = new Tone.NoiseSynth({ noise: { type: 'white' }, envelope: { attack: 0.001, decay: 0.05, sustain: 0 } })
+  private noise = new Tone.NoiseSynth({
+    noise: { type: 'white' },
+    envelope: { attack: 0.001, decay: 0.05, sustain: 0 },
+  })
   private noiseOut = new Tone.Gain(0.3)
   private filter = new Tone.Filter({ type: 'lowpass', rolloff: -24 })
   private lfo = new Tone.LFO(0.35, 100, 2000).start()
@@ -30,10 +37,16 @@ export class AudioEngine {
   private transport = Tone.getTransport()
 
   private outputs: Partial<Record<JackId, Tone.ToneAudioNode>> = {
-    osc: this.oscOut, noise: this.noiseOut, filterOut: this.filter, delayOut: this.delay,
+    osc: this.oscOut,
+    noise: this.noiseOut,
+    filterOut: this.filter,
+    delayOut: this.delay,
   }
   private inputs: Partial<Record<JackId, Tone.InputNode>> = {
-    filterIn: this.filter, delayIn: this.delay, out1: this.in1, out2: this.in2,
+    filterIn: this.filter,
+    delayIn: this.delay,
+    out1: this.in1,
+    out2: this.in2,
   }
 
   private state: SynthState
@@ -48,11 +61,17 @@ export class AudioEngine {
     this.master.connect(this.meter)
     this.master.toDestination()
 
-    new Tone.Sequence<number>((time, i) => {
-      if (this.state.steps[i]) this.synth.triggerAttackRelease(NOTES[i], '16n', time)
-      if (this.state.hats[i]) this.noise.triggerAttackRelease('32n', time, 0.8)
-      Tone.getDraw().schedule(() => onStep(i), time)
-    }, [0, 1, 2, 3, 4, 5, 6, 7], '8n').start(0)
+    new Tone.Sequence<number>(
+      (time, i) => {
+        if (this.state.steps[i])
+          this.synth.triggerAttackRelease(NOTES[i], '16n', time)
+        if (this.state.hats[i])
+          this.noise.triggerAttackRelease('32n', time, 0.8)
+        Tone.getDraw().schedule(() => onStep(i), time)
+      },
+      [0, 1, 2, 3, 4, 5, 6, 7],
+      '8n',
+    ).start(0)
 
     this.sync(state)
   }
@@ -60,7 +79,8 @@ export class AudioEngine {
   sync(state: SynthState) {
     this.state = state
     const p = state.params
-    if (this.synth.oscillator.type !== state.wave) this.synth.oscillator.type = state.wave
+    if (this.synth.oscillator.type !== state.wave)
+      this.synth.oscillator.type = state.wave
     this.synth.envelope.decay = p.decay
     this.noiseOut.gain.rampTo(p.hat * 0.5, 0.05)
     this.lfo.frequency.rampTo(p.rate, 0.05)
@@ -74,7 +94,8 @@ export class AudioEngine {
     this.transport.bpm.rampTo(p.bpm, 0.1)
     this.syncPatch(state.patch)
     // Com o LFO ligado é ele quem move o corte; sem ele, vale o botão.
-    if (!state.patch.some(c => JACKS[c.from].kind === 'mod')) this.filter.frequency.rampTo(p.cutoff, 0.05)
+    if (!state.patch.some((c) => JACKS[c.from].kind === 'mod'))
+      this.filter.frequency.rampTo(p.cutoff, 0.05)
   }
 
   start() {
@@ -93,7 +114,7 @@ export class AudioEngine {
   }
 
   private syncPatch(patch: Connection[]) {
-    const next = new Map(patch.map(c => [key(c), c]))
+    const next = new Map(patch.map((c) => [key(c), c]))
     for (const [k, c] of this.wired) if (!next.has(k)) this.wire(c, false)
     for (const [k, c] of next) if (!this.wired.has(k)) this.wire(c, true)
     this.wired = next
@@ -105,7 +126,8 @@ export class AudioEngine {
       else this.lfo.disconnect()
       return
     }
-    const src = this.outputs[from]!, dst = this.inputs[to]!
+    const src = this.outputs[from]!,
+      dst = this.inputs[to]!
     if (on) src.connect(dst)
     else src.disconnect(dst)
   }

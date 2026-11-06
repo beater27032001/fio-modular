@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, type KeyboardEvent, type PointerEvent } from 'react'
+
 import { motion } from 'motion/react'
 
 interface Props {
@@ -11,7 +12,12 @@ interface Props {
   onChange: (value: number) => void
 }
 
-const KEY_STEP: Record<string, number> = { ArrowUp: 0.05, ArrowRight: 0.05, ArrowDown: -0.05, ArrowLeft: -0.05 }
+const KEY_STEP: Record<string, number> = {
+  ArrowUp: 0.05,
+  ArrowRight: 0.05,
+  ArrowDown: -0.05,
+  ArrowLeft: -0.05,
+}
 
 export function Knob({ label, value, display, onChange }: Props) {
   const drag = useRef<{ y: number; n: number } | null>(null)
@@ -27,7 +33,10 @@ export function Knob({ label, value, display, onChange }: Props) {
   }
   const onKeyDown = (e: KeyboardEvent) => {
     const step = KEY_STEP[e.key]
-    if (step) { e.preventDefault(); set(value + step) }
+    if (step) {
+      e.preventDefault()
+      set(value + step)
+    }
   }
 
   return (

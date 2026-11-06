@@ -1,4 +1,15 @@
-export type ParamId = 'bpm' | 'decay' | 'hat' | 'rate' | 'depth' | 'cutoff' | 'q' | 'time' | 'fb' | 'mix' | 'vol'
+export type ParamId =
+  | 'bpm'
+  | 'decay'
+  | 'hat'
+  | 'rate'
+  | 'depth'
+  | 'cutoff'
+  | 'q'
+  | 'time'
+  | 'fb'
+  | 'mix'
+  | 'vol'
 export type ParamValues = Record<ParamId, number>
 
 type Format = 'bpm' | 'ms' | 'pct' | 'hz' | 'hzlog' | 'dec'
@@ -28,7 +39,9 @@ export const PARAMS: Record<ParamId, ParamSpec> = {
 // Os botões trabalham em 0..1; o corte do filtro é logarítmico, como o ouvido.
 const isLog = (s: ParamSpec) => s.format === 'hzlog'
 export const toNormal = (s: ParamSpec, v: number) =>
-  isLog(s) ? Math.log(v / s.min) / Math.log(s.max / s.min) : (v - s.min) / (s.max - s.min)
+  isLog(s)
+    ? Math.log(v / s.min) / Math.log(s.max / s.min)
+    : (v - s.min) / (s.max - s.min)
 export const fromNormal = (s: ParamSpec, n: number) =>
   isLog(s) ? s.min * (s.max / s.min) ** n : s.min + n * (s.max - s.min)
 
@@ -36,12 +49,18 @@ const dec = (v: number, d: number) => v.toFixed(d).replace('.', ',')
 
 export function formatParam(s: ParamSpec, v: number): string {
   switch (s.format) {
-    case 'bpm': return `${Math.round(v)} bpm`
-    case 'ms': return `${Math.round(v * 1000)} ms`
-    case 'pct': return `${Math.round(v * 100)}%`
-    case 'hz': return `${dec(v, 2)} Hz`
-    case 'hzlog': return v >= 1000 ? `${dec(v / 1000, 1)} kHz` : `${Math.round(v)} Hz`
-    case 'dec': return dec(v, 1)
+    case 'bpm':
+      return `${Math.round(v)} bpm`
+    case 'ms':
+      return `${Math.round(v * 1000)} ms`
+    case 'pct':
+      return `${Math.round(v * 100)}%`
+    case 'hz':
+      return `${dec(v, 2)} Hz`
+    case 'hzlog':
+      return v >= 1000 ? `${dec(v / 1000, 1)} kHz` : `${Math.round(v)} Hz`
+    case 'dec':
+      return dec(v, 1)
   }
 }
 

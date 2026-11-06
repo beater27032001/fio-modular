@@ -1,7 +1,8 @@
 'use client'
 
 import { motion } from 'motion/react'
-import { EASE } from '@/constants/motion'
+
+import { EASE } from '@constants/motion'
 
 const TITLE = ['Fio Modular', 'FM-6']
 
@@ -23,7 +24,11 @@ export function Hero() {
                 className="block"
                 initial={{ y: '110%' }}
                 animate={{ y: 0 }}
-                transition={{ duration: 0.9, delay: 0.15 + i * 0.12, ease: EASE }}
+                transition={{
+                  duration: 0.9,
+                  delay: 0.15 + i * 0.12,
+                  ease: EASE,
+                }}
               >
                 {line}
               </motion.span>
@@ -36,18 +41,29 @@ export function Hero() {
           transition={{ duration: 0.7, delay: 0.45, ease: EASE }}
           className="m-0 max-w-[46ch] text-muted"
         >
-          Seis módulos, nenhuma tela. O som muda conforme você liga os cabos. Aperte Ligar e mexa em tudo.
+          Seis módulos, nenhuma tela. O som muda conforme você liga os cabos.
+          Aperte Ligar e mexa em tudo.
         </motion.p>
       </div>
       <motion.ol
         initial="hidden"
         animate="show"
-        variants={{ show: { transition: { staggerChildren: 0.08, delayChildren: 0.6 } } }}
+        variants={{
+          show: { transition: { staggerChildren: 0.08, delayChildren: 0.6 } },
+        }}
         className="m-0 mb-3.5 flex list-none flex-wrap gap-x-[18px] gap-y-2.5 p-0 text-sm text-muted"
       >
         {STEPS.map((step, i) => (
-          <motion.li key={step} variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } }}>
-            <b className="mr-1.5 font-mono font-medium text-hot">{String(i + 1).padStart(2, '0')}</b>
+          <motion.li
+            key={step}
+            variants={{
+              hidden: { opacity: 0, y: 10 },
+              show: { opacity: 1, y: 0 },
+            }}
+          >
+            <b className="mr-1.5 font-mono font-medium text-hot">
+              {String(i + 1).padStart(2, '0')}
+            </b>
             {step}
           </motion.li>
         ))}

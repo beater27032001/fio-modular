@@ -1,10 +1,10 @@
-import { MotionProvider } from '@/providers/MotionProvider'
-import { Buy } from '@/components/organisms/Buy'
-import { Features } from '@/components/organisms/Features'
-import { Footer } from '@/components/organisms/Footer'
-import { Header } from '@/components/organisms/Header'
-import { Hero } from '@/components/organisms/Hero'
-import { Rack } from '@/components/organisms/Rack'
+import { Buy } from '@organisms/Buy'
+import { Features } from '@organisms/Features'
+import { Footer } from '@organisms/Footer'
+import { Header } from '@organisms/Header'
+import { Hero } from '@organisms/Hero'
+import { Rack } from '@organisms/Rack'
+import { MotionProvider } from '@providers/MotionProvider'
 
 export default function Home() {
   return (
@@ -14,7 +14,7 @@ export default function Home() {
         <Hero />
         <Rack />
       </div>
-      <section className="mt-[70px] rack:mt-28 border-t border-rail py-16 sm:py-20">
+      <section className="mt-[70px] border-t border-rail py-16 rack:mt-28 sm:py-20">
         <div className="wrap">
           <Features />
           <Buy />

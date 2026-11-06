@@ -1,8 +1,17 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { AnimatePresence, animate, motion, useInView, useMotionValue, useTransform } from 'motion/react'
-import { EASE } from '@/constants/motion'
+
+import {
+  AnimatePresence,
+  animate,
+  motion,
+  useInView,
+  useMotionValue,
+  useTransform,
+} from 'motion/react'
+
+import { EASE } from '@constants/motion'
 
 const PRICE = 4200
 const brl = (v: number) => `R$ ${Math.round(v).toLocaleString('pt-BR')}`
@@ -20,7 +29,11 @@ function Price() {
   }, [inView, value])
 
   return (
-    <motion.div ref={ref} aria-label={brl(PRICE)} className="font-display text-[clamp(40px,7vw,80px)] leading-none tabular-nums">
+    <motion.div
+      ref={ref}
+      aria-label={brl(PRICE)}
+      className="font-display text-[clamp(40px,7vw,80px)] leading-none tabular-nums"
+    >
       {text}
     </motion.div>
   )
@@ -39,7 +52,9 @@ export function Buy() {
       transition={{ duration: 0.7, ease: EASE }}
     >
       <div>
-        <div className="tag mb-2.5 inline-block">KIT COMPLETO · 6 MÓDULOS + 5 CABOS</div>
+        <div className="mb-2.5 inline-block tag">
+          KIT COMPLETO · 6 MÓDULOS + 5 CABOS
+        </div>
         <Price />
       </div>
       <motion.button

@@ -1,7 +1,15 @@
 export type SignalKind = 'audio' | 'mod'
 export type JackId =
-  | 'osc' | 'noise' | 'lfo' | 'filterOut' | 'delayOut'
-  | 'filterIn' | 'filterMod' | 'delayIn' | 'out1' | 'out2'
+  | 'osc'
+  | 'noise'
+  | 'lfo'
+  | 'filterOut'
+  | 'delayOut'
+  | 'filterIn'
+  | 'filterMod'
+  | 'delayIn'
+  | 'out1'
+  | 'out2'
 
 export interface JackSpec {
   dir: 'in' | 'out'
@@ -38,13 +46,25 @@ export const DEFAULT_PATCH: Connection[] = [
 export type PatchCheck = { ok: true } | { ok: false; reason?: string }
 
 /** Um cabo sai de uma saída e entra numa entrada livre do mesmo tipo de sinal. */
-export function canConnect(from: JackId, to: JackId, patch: Connection[]): PatchCheck {
-  const a = JACKS[from], b = JACKS[to]
+export function canConnect(
+  from: JackId,
+  to: JackId,
+  patch: Connection[],
+): PatchCheck {
+  const a = JACKS[from],
+    b = JACKS[to]
   if (a.dir !== 'out' || b.dir !== 'in') return { ok: false }
   if (a.kind !== b.kind)
-    return { ok: false, reason: a.kind === 'mod' ? 'A saída do LFO só controla a entrada MOD do filtro.' : 'A entrada MOD aceita só o LFO.' }
-  if (patch.some(c => c.to === to)) return { ok: false }
+    return {
+      ok: false,
+      reason:
+        a.kind === 'mod'
+          ? 'A saída do LFO só controla a entrada MOD do filtro.'
+          : 'A entrada MOD aceita só o LFO.',
+    }
+  if (patch.some((c) => c.to === to)) return { ok: false }
   return { ok: true }
 }
 
-export const cableAt = (to: JackId, patch: Connection[]) => patch.find(c => c.to === to)
+export const cableAt = (to: JackId, patch: Connection[]) =>
+  patch.find((c) => c.to === to)

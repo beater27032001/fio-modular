@@ -1,7 +1,8 @@
 'use client'
 
 import { motion } from 'motion/react'
-import { EASE } from '@/constants/motion'
+
+import { EASE } from '@constants/motion'
 
 export function Header() {
   return (

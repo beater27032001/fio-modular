@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": [
-      "ES2022",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "moduleResolution": "bundler",
     "jsx": "react-jsx",
@@ -22,9 +18,16 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@atoms/*": ["./src/components/atoms/*"],
+      "@organisms/*": ["./src/components/organisms/*"],
+      "@providers/*": ["./src/providers/*"],
+      "@services/*": ["./src/services/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@domain/*": ["./src/domain/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@constants/*": ["./src/constants/*"]
     },
     "allowJs": true,
     "esModuleInterop": true
@@ -36,7 +39,5 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
