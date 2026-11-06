@@ -22,14 +22,15 @@ Funciona com mouse e toque, em qualquer tamanho de tela: em telas largas o rack 
 
 ## Tecnologias
 
-| | |
-|---|---|
-| [React 19](https://react.dev) + [TypeScript](https://www.typescriptlang.org) | interface e tipagem |
-| [Vite](https://vite.dev) | servidor de desenvolvimento e build |
-| [Tailwind CSS 4](https://tailwindcss.com) | estilos e layout responsivo |
-| [Motion](https://motion.dev) | animações de entrada, scroll e interação |
-| [Tone.js](https://tonejs.github.io) | síntese de áudio (carregado só quando você aperta Ligar) |
-| [Playwright](https://playwright.dev) | geração dos prints deste README |
+| Tecnologia                                                                   | Uso                                                      |
+| ---------------------------------------------------------------------------- | -------------------------------------------------------- |
+| [Next.js 16](https://nextjs.org) (App Router)                                | framework, renderização estática e fontes                |
+| [React 19](https://react.dev) + [TypeScript](https://www.typescriptlang.org) | interface e tipagem                                      |
+| [Tailwind CSS 4](https://tailwindcss.com)                                    | estilos e layout responsivo                              |
+| [Motion](https://motion.dev)                                                 | animações de entrada, scroll e interação                 |
+| [Tone.js](https://tonejs.github.io)                                          | síntese de áudio (carregado só quando você aperta Ligar) |
+| [Playwright](https://playwright.dev)                                         | geração dos prints deste README                          |
+| ESLint + Prettier                                                            | padrão de código e formatação                            |
 
 ## Como rodar
 
@@ -40,33 +41,39 @@ npm install
 npm run dev
 ```
 
-Abra http://localhost:5173. Para testar no celular na mesma rede Wi-Fi, rode `npm run dev -- --host` e use o endereço "Network" que aparece no terminal.
+Abra http://localhost:3000. Para testar no celular na mesma rede Wi-Fi, rode `npm run dev -- -H 0.0.0.0` e acesse `http://<ip-do-seu-computador>:3000`.
 
-### Outros comandos
+### Comandos
 
-| Comando | O que faz |
-|---|---|
-| `npm run build` | verifica os tipos e gera a versão final em `dist/` |
-| `npm run preview` | serve a versão final localmente |
-| `npm run check` | testa as regras de conexão dos cabos |
-| `npm run screenshots` | gera os prints em `docs/` (rode `npm run build` antes e, na primeira vez, `npx playwright install chromium`) |
+| Comando               | O que faz                                                                                       |
+| --------------------- | ----------------------------------------------------------------------------------------------- |
+| `npm run dev`         | servidor de desenvolvimento                                                                     |
+| `npm run build`       | verifica os tipos e gera a versão de produção                                                   |
+| `npm run start`       | serve a versão de produção (depois do build)                                                    |
+| `npm run lint`        | ESLint                                                                                          |
+| `npm run format`      | Prettier em todo o projeto                                                                      |
+| `npm run check`       | testa as regras de conexão dos cabos                                                            |
+| `npm run screenshots` | gera os prints em `docs/` (depois do build; na primeira vez, `npx playwright install chromium`) |
 
 ## Estrutura
 
 ```
 src/
-├── domain/              regras do produto, sem React
-│   ├── synth.ts         parâmetros, formatos de exibição e sequência
-│   └── patch.ts         entradas, saídas e o que pode ligar em quê
-├── services/audio/      AudioEngine: traduz o estado do painel para o Tone.js
-├── hooks/useSynth.ts    estado do sintetizador e ciclo de vida do áudio
-├── lib/rope.ts          física dos cabos (Verlet)
-├── providers/rack.ts    contextos do rack
+├── app/                   layout, página e estilos globais (Next.js)
+├── domain/                regras do produto, sem React
+│   ├── synth.ts           parâmetros, formatos de exibição e sequência
+│   └── patch.ts           entradas, saídas e o que pode ligar em quê
+├── services/audio/        AudioEngine: traduz o estado do painel para o Tone.js
+├── hooks/useSynth.ts      estado do sintetizador e ciclo de vida do áudio
+├── lib/                   física dos cabos (rope.ts) e utilitário cn
+├── providers/             contextos do rack e configuração do Motion
 ├── components/
-│   ├── atoms/           Knob, Jack
-│   └── organisms/       Header, Hero, Rack, Features, Buy, Footer
-└── constants/           curvas de animação
+│   ├── atoms/             Knob, Jack
+│   └── organisms/         Header, Hero, Rack, Features, Buy, Footer
+└── constants/             curvas de animação
 ```
+
+Imports usam aliases: `@atoms/*`, `@organisms/*`, `@domain/*`, `@services/*`, `@hooks/*`, `@providers/*`, `@lib/*`, `@constants/*`.
 
 ---
 
