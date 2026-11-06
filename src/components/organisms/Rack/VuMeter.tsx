@@ -21,7 +21,7 @@ export function VuMeter({ level, active }: { level: () => number; active: boolea
   return (
     <div ref={ref} className="vu" aria-hidden>
       {BARS.map(i => (
-        <i key={i} className={i > 6 ? 'hi pk' : i > 4 ? 'hi' : ''} style={{ height: 20 + i * 10 }} />
+        <i key={i} className={i > 6 ? 'hi pk' : i > 4 ? 'hi' : ''} style={{ height: `${30 + i * 10}%` }} />
       ))}
     </div>
   )
