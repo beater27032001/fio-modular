@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #101012;
+  --color-rack: #1b1b1f;
+  --color-rail: #2a2a30;
+  --color-panel: #d9dbde;
+  --color-panel-2: #c9ccd1;
+  --color-ink: #141416;
+  --color-fg: #ececef;
+  --color-muted: #9a9aa3;
+  --color-hot: #ff5c39;
+  --font-display: "Rubik Mono One", "Arial Black", sans-serif;
+  --font-body: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --breakpoint-rack: 1100px;
+}
+
+@utility wrap {
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+@utility tag {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  border: 1px solid var(--color-rail);
+  background: var(--color-rack);
+  padding: 7px 12px;
+  border-radius: 4px;
+  transition: color .2s, border-color .2s;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; color-scheme: dark; }
+  body {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-body);
+    line-height: 1.5;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+  button { cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--color-hot); outline-offset: 2px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after { animation: none !important; scroll-behavior: auto !important; }
+}
